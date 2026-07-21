@@ -5,21 +5,7 @@ orders on **Binance USDT-M Futures Testnet**, usable from either a CLI or an adv
 Streamlit dashboard. Both front ends share the same core `bot/` package, so there is exactly
 one implementation of the order logic, validation, and logging.
 
-```
-trading_bot/
-  bot/
-    __init__.py
-    client.py         # signed REST client for Binance Futures Testnet
-    orders.py         # OrderService: validation + client orchestration + summaries
-    validators.py     # input validation (symbol, side, type, qty, price, stop price)
-    logging_config.py # rotating file + console logging setup
-  cli.py               # argparse CLI entry point
-  streamlit_app.py      # advanced Streamlit UI (same bot/ package underneath)
-  requirements.txt
-  .env.example
-  logs/
-    trading_bot.log    # created on first run
-```
+
 
 ## 1. Setup
 
@@ -70,7 +56,7 @@ entry to `logs/trading_bot.log`.
 
 ### 2.2 Streamlit UI
 ```bash
-streamlit run streamlit_app.py
+streamlit run app.py
 ```
 Features:
 - **Sidebar** — connect/disconnect with API key/secret, live account balance (USDT wallet
