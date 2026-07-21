@@ -1,12 +1,4 @@
-"""
-Advanced Streamlit UI for the Binance Futures Testnet trading bot.
 
-Run with:
-    streamlit run streamlit_app.py
-
-Reuses the same bot/ package (client, orders, validators, logging) as the
-CLI - the UI is just another front-end on top of the same core logic.
-"""
 
 import os
 from datetime import datetime
@@ -30,9 +22,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# --------------------------------------------------------------------- #
-# Styling
-# --------------------------------------------------------------------- #
+
 st.markdown(
     """
     <style>
@@ -52,9 +42,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --------------------------------------------------------------------- #
-# Session state
-# --------------------------------------------------------------------- #
+
 if "order_history" not in st.session_state:
     st.session_state.order_history = []  # list of dicts for the table
 if "client" not in st.session_state:
@@ -73,9 +61,7 @@ def get_status_pill(status: str) -> str:
     return f'<span class="status-pill {cls}">{status or "N/A"}</span>'
 
 
-# --------------------------------------------------------------------- #
-# Sidebar - connection / credentials
-# --------------------------------------------------------------------- #
+
 with st.sidebar:
     st.title("⚙️ Connection")
 
@@ -134,16 +120,14 @@ with st.sidebar:
     st.divider()
     st.caption("Logs are written to `logs/trading_bot.log`")
 
-# --------------------------------------------------------------------- #
-# Main area
-# --------------------------------------------------------------------- #
+
 st.title("📈 Binance Futures Testnet — Trading Bot")
 
 tab_order, tab_history, tab_market, tab_logs = st.tabs(
     ["🛒 Place Order", "📒 Order History", "💹 Market Data", "🧾 Logs"]
 )
 
-# ----------------------------- Place Order ---------------------------- #
+
 with tab_order:
     if not st.session_state.connected:
         st.info("Connect with your Testnet API key/secret in the sidebar to place orders.")
@@ -242,7 +226,7 @@ with tab_order:
         else:
             st.caption("Submit an order to see the result here.")
 
-# ----------------------------- Order History --------------------------- #
+
 with tab_history:
     st.subheader("Session Order History")
     if st.session_state.order_history:
@@ -261,7 +245,7 @@ with tab_history:
     else:
         st.info("No orders placed yet this session.")
 
-# ----------------------------- Market Data ---------------------------- #
+
 with tab_market:
     st.subheader("Live Price Lookup")
     mkt_symbol = st.text_input("Symbol", value="BTCUSDT", key="mkt_symbol").strip().upper()
@@ -288,7 +272,7 @@ with tab_market:
             except (BinanceAPIError, BinanceNetworkError) as exc:
                 st.error(f"Could not fetch open orders: {exc}")
 
-# ----------------------------- Logs ------------------------------------ #
+
 with tab_logs:
     st.subheader("Log File Viewer")
     st.caption(f"Reading from `{LOG_PATH}`")
